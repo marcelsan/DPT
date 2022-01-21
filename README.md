@@ -1,10 +1,11 @@
 ## Vision Transformers for Dense Prediction
 
-This repository contains code and models for our [paper](https://arxiv.org/abs/2103.13413):
+This repository contains code and models for the [paper](https://arxiv.org/abs/2103.13413):
 
 > Vision Transformers for Dense Prediction  
 > René Ranftl, Alexey Bochkovskiy, Vladlen Koltun
 
+It is a fork from the original repository. We include scripts for generating depth for the images in the Cityscapes and KITTI datasets. 
 
 ### Changelog 
 * [March 2021] Initial release of inference code and models

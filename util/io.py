@@ -1,5 +1,6 @@
 """Utils for monoDepth.
 """
+import argparse
 import sys
 import re
 import numpy as np
@@ -217,3 +218,60 @@ def write_segm_img(path, image, labels, palette="detail", alpha=0.5):
     out.save(path + ".png")
 
     return
+
+def str_to_bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Boolean value expected.')
+
+def write_npy(path, depth):
+    """Write depth map to npy file.
+
+    Args:
+        path (str): filepath without extension
+        depth (np.array): depth
+    """
+    depth_half_precision = depth.astype(np.float16)
+    np.save(f"{path}.npy", depth_half_precision)
+
+
+def get_parser():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument(
+        "-i", "--input_path", default="input", help="folder with input images"
+    )
+
+    parser.add_argument(
+        "-m", "--model_weights", default=None, help="path to model weights"
+    )
+
+    parser.add_argument(
+        "-t",
+        "--model_type",
+        default="dpt_large",
+        help="model type [dpt_large|dpt_hybrid|midas_v21]",
+    )
+
+    parser.add_argument('--save_npy',
+        type=str_to_bool,
+        required=False,
+        default=True,
+        help='True if you want to save the infered depth to a .npy file.'
+    )
+    
+    parser.add_argument('--save_png',
+        type=str_to_bool,
+        required=False,
+        default=True,
+        help='True if you want to save the infered depth to a .png file.'
+    )
+
+    parser.add_argument("--absolute_depth", dest="absolute_depth", action="store_true")
+    parser.add_argument("--optimize", dest="optimize", action="store_true")
+    parser.add_argument("--no-optimize", dest="optimize", action="store_false")
+
+    return parser

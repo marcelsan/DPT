@@ -197,7 +197,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-t",
         "--model_type",
-        default="dpt_hybrid",
+        default="dpt_large",
         help="model type [dpt_large|dpt_hybrid|midas_v21]",
     )
 
